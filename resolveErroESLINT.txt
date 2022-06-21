@@ -1,0 +1,1 @@
+Para corrigir esse erro é bem simples, basta abrir o terminal e digitar o seguinte comando git config --global core.autocrlf false depois disso delete o repositório e baixe de novo que o problema estará resolvido.
