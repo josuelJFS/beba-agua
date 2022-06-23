@@ -14,3 +14,8 @@ export const Img = styled.Image`
   height: ${Theme.func.wp(42)}px;
   margin-right: 20px;
 `;
+
+export const Pointer = styled.Text`
+  font-size: 20px;
+  color: #fff;
+`;

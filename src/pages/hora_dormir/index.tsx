@@ -8,30 +8,32 @@ import {
   AppTitulo,
 } from "../../components/uiAppStyle/style";
 import { ContainerBody, ContainerFoot, ContainerHeader } from "./style";
-import acorda from "../../img/acordar.png";
+import dormir from "../../img/dormir.png";
+import { useNavigation } from "@react-navigation/native";
 const hora = [];
 const min = [];
-for (let index = 0; index < 23; index++) {
+for (let index = 0; index < 24; index++) {
   const value = index + "";
   hora.push(value.padStart(2, "0"));
 }
-for (let index = 0; index < 59; index++) {
+for (let index = 0; index < 60; index++) {
   const value = index + "";
   min.push(value.padStart(2, "0"));
 }
 
 const Peso: React.FC = () => {
+  const navigation = useNavigation();
   return (
     <AppContainerBackGround colors={["#35DBFF", "#0C9BFF"]} start={{ x: -0.3, y: 0.4 }}>
       <ContainerHeader>
-        <AppTitulo>Que horas você se acorda?</AppTitulo>
-        <AppSubTitulo>Vamos te lembrar sempre de beber água depois de se levantar</AppSubTitulo>
+        <AppTitulo>Que horas você vai dormir?</AppTitulo>
+        <AppSubTitulo>Vamos te lembrar sempre de beber água antes de dormir</AppSubTitulo>
       </ContainerHeader>
       <ContainerBody>
-        <ImgPickList index={12} index2={30} list={hora} list2={min} img={acorda}></ImgPickList>
+        <ImgPickList index={22} index2={30} list={hora} list2={min} img={dormir}></ImgPickList>
       </ContainerBody>
       <ContainerFoot>
-        <AppButton>
+        <AppButton onPress={() => navigation.navigate("home")}>
           <AppTextButton>Proxímo</AppTextButton>
         </AppButton>
       </ContainerFoot>

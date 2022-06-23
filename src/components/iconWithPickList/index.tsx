@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Container, Img } from "./style";
+import { Container, Img, Pointer } from "./style";
 
 import RollPickerNative from "roll-picker-native";
 import { ListViewBase, Text } from "react-native";
@@ -20,7 +20,7 @@ const ImgPickList: React.FC<props> = ({ img, list, list2, index = 0, index2 = 0 
   return (
     <Container>
       <Img resizeMode="cover" source={img} />
-      <View style={{ flexDirection: "row", width: 100 }}>
+      <View style={{ flexDirection: "row", width: 100, justifyContent: "center", alignItems: "center" }}>
         <RollPickerNative
           items={listData}
           index={index}
@@ -31,7 +31,7 @@ const ImgPickList: React.FC<props> = ({ img, list, list2, index = 0, index2 = 0 
           itemTextStyle={{ fontFamily: "Inter_800ExtraBold", color: "#AEDDFF" }}
           selectHeight={40}
         />
-
+        {list2 && <Pointer>:</Pointer>}
         {list2 && (
           <RollPickerNative
             items={listData2}
