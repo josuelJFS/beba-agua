@@ -19,18 +19,16 @@
       "bundleIdentifier": "com.josuel123.copodagua",
       "requireFullScreen": true,
       "config": {
-        "googleMobileAdsAppId":"ca-app-pub-7795545248519145~4994489347"
+        "googleMobileAdsAppId": "ca-app-pub-7795545248519145~4994489347"
       }
     },
     "android": {
       "package": "com.josuel123.copodagua",
-      "versionCode":2,
-      "permissions":[],
+      "versionCode": 2,
+      "permissions": [],
       "config": {
-        "googleMobileAdsAppId":"ca-app-pub-7795545248519145~4994489347"
+        "googleMobileAdsAppId": "ca-app-pub-7795545248519145~4994489347"
       }
     }
   }
-
-
 }

@@ -5,10 +5,10 @@ import { AdMobBanner, AdMobInterstitial, PublisherBanner, AdMobRewarded, setTest
 import { AppContainerBackGround } from "../../components/uiAppStyle/style";
 import { Body, ButtonDrink, Footer, Header, Img } from "./style";
 import copoImg from "../../img/copobotao.png";
-
-// Set global test device ID
+import ModalDrink from "./modalDrink";
 
 const Home: React.FC = () => {
+  const [showModal, setShowModal] = useState(false);
   const testIDbanner = "ca-app-pub-3940256099942544/6300978111";
   const productionIDbanner = "ca-app-pub-7795545248519145/2047147404";
   // Is a real device and running in production.
@@ -29,7 +29,7 @@ const Home: React.FC = () => {
       <Header></Header>
       <Body></Body>
       <Footer>
-        <ButtonDrink>
+        <ButtonDrink onPress={() => setShowModal(true)}>
           <Img resizeMode="cover" source={copoImg} />
         </ButtonDrink>
       </Footer>
@@ -39,6 +39,7 @@ const Home: React.FC = () => {
         servePersonalizedAds // true or false
         onDidFailToReceiveAdWithError={(e) => console.log(e)}
       />
+      <ModalDrink isChose={setShowModal} showModal={showModal} />
     </AppContainerBackGround>
   );
 };

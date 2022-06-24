@@ -5,7 +5,7 @@ import { useAutenticacaoContext } from "../contexts/autenticacao";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Rotas = () => {
-  const { acesso } = useAutenticacaoContext();
+  const acesso = false;
 
   if (acesso) {
     // eslint-disable-next-line no-var

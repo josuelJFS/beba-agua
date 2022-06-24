@@ -5,6 +5,9 @@ export const Theme = {
   colors: {
     white: "#ffffff",
     GreyMedium2: "#575757",
+    blueModal: "#00C2FF",
+    blueFont1: "#0096B7",
+    blueButtom: "#35DBFF",
   },
   font: {
     family: {
