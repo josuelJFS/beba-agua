@@ -4220,6 +4220,14 @@ expo-av@~10.2.0:
   dependencies:
     "@expo/config-plugins" "^4.0.2"
 
+expo-background-fetch@~10.1.0:
+  version "10.1.1"
+  resolved "https://registry.yarnpkg.com/expo-background-fetch/-/expo-background-fetch-10.1.1.tgz#8790e6e2f6360ef549fcbbdd851656ffc44db412"
+  integrity sha512-O6bC8KyaZx7GVFEIO10YTz36gCAFTiBLITNSaqnS+CBCUIfTaCNxz9YXfIc0ESegFuDEElGOFxRp2wWop6PERw==
+  dependencies:
+    "@expo/config-plugins" "^4.0.2"
+    expo-task-manager "~10.1.0"
+
 expo-blur@~11.0.0:
   version "11.0.0"
   resolved "https://registry.yarnpkg.com/expo-blur/-/expo-blur-11.0.0.tgz#3542afed5c0037554657d98c31a5933dd78098dd"
@@ -4431,6 +4439,15 @@ expo-structured-headers@~2.1.0:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/expo-structured-headers/-/expo-structured-headers-2.1.1.tgz#bdbf8752af36c7d3203540476af55562546b6aeb"
   integrity sha512-0up4sfHHsiK2YLpTwD/ssUD2oeSGzVUeARnu/itKAJO4zHqjpc+m8N1s7HPSJcdC7fdDpMjzcdrDasT0o+cOAw==
+
+expo-task-manager@~10.1.0:
+  version "10.1.1"
+  resolved "https://registry.yarnpkg.com/expo-task-manager/-/expo-task-manager-10.1.1.tgz#f8e8d395f412dd97c5eeb2e433f139e85de2e14d"
+  integrity sha512-qnI0TFOFjnc16NFlQ/sYMpkUAFt9U0ju76HJlrJbQw1j3wydkfG+WT/63tYnVxpCUwCx0nUdWRJZETVC18/fjQ==
+  dependencies:
+    "@expo/config-plugins" "^4.0.2"
+    unimodules-app-loader "~3.0.0"
+    unimodules-task-manager-interface "7.1.1"
 
 expo-updates-interface@~0.5.0:
   version "0.5.2"
@@ -7758,6 +7775,11 @@ react-is@^17.0.1:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-17.0.2.tgz#e691d4a8e9c789365655539ab372762b0efb54f0"
   integrity sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==
 
+react-native-alarm-clock@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/react-native-alarm-clock/-/react-native-alarm-clock-2.0.2.tgz#acd9871ec1d1ce508abc3bafead0b0b8a71a8769"
+  integrity sha512-Ianf/xYmnThRScl3Ew0N9AfOAmiRyB2DaXrOI4Mu4+0mmINtTccHs5N2UAyb5Z6c/RwPNrViRIFc1KvTA0b9hg==
+
 react-native-codegen@^0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/react-native-codegen/-/react-native-codegen-0.0.6.tgz#b3173faa879cf71bfade8d030f9c4698388f6909"
@@ -9173,17 +9195,17 @@ unimodules-app-loader@~3.0.0:
   resolved "https://registry.yarnpkg.com/unimodules-app-loader/-/unimodules-app-loader-3.0.1.tgz#bed09a10c98c0f769002365a5d9de7da9b41f9d6"
   integrity sha512-iyE7Nx6XNgDjJQ92S3GiZhUiWYO2BrF2ETQq9yhpJ9FkE7yxlenNx+HE21yrSzGEkW48hqHfG1+2kk3hnNa9aQ==
 
+unimodules-task-manager-interface@7.1.1, unimodules-task-manager-interface@~7.1.0:
+  version "7.1.1"
+  resolved "https://registry.yarnpkg.com/unimodules-task-manager-interface/-/unimodules-task-manager-interface-7.1.1.tgz#1d48585012018971a0f0b62bc5ac53508a7addb4"
+  integrity sha512-vvtxJO3O6fJXvSc9qvgB2FS9xJk2nWG4NOvwCMmTmfblmvzGPFcTheOKzV7Z1dvjlqTZZ+TDqd5XOGa+0+NXVA==
+
 unimodules-task-manager-interface@~7.0.0:
   version "7.0.3"
   resolved "https://registry.yarnpkg.com/unimodules-task-manager-interface/-/unimodules-task-manager-interface-7.0.3.tgz#4c65d5bb040947ae4f19fb00888b8e2cce3efbfe"
   integrity sha512-+dtanGOuFk63tMBKVZuQ3HHxFbhQnToOLgF7UeHKrJf00Nkwt14T9ID57AZMeukUEolvifjVhng97L87gTGq0g==
   dependencies:
     expo-modules-core "~0.4.4"
-
-unimodules-task-manager-interface@~7.1.0:
-  version "7.1.1"
-  resolved "https://registry.yarnpkg.com/unimodules-task-manager-interface/-/unimodules-task-manager-interface-7.1.1.tgz#1d48585012018971a0f0b62bc5ac53508a7addb4"
-  integrity sha512-vvtxJO3O6fJXvSc9qvgB2FS9xJk2nWG4NOvwCMmTmfblmvzGPFcTheOKzV7Z1dvjlqTZZ+TDqd5XOGa+0+NXVA==
 
 union-value@^1.0.0:
   version "1.0.1"
