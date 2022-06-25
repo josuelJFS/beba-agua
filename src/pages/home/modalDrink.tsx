@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Modal } from "react-native";
 import { ButtonDrinkNow, ButtonName, ContainerFooter, ContainerTop, Igual, ImgModal, InputML, ModalBox } from "./style";
 import copoImg from "../../img/copobotao.png";
+import { useAutenticacaoContext } from "../../contexts/autenticacao";
 
 type props = {
   showModal: boolean;
@@ -9,12 +10,18 @@ type props = {
 };
 
 const ModalDrink: React.FC<props> = ({ showModal, isChose }) => {
-  const [ml, setMl] = useState("350");
+  const { userInfo, setUserInfo } = useAutenticacaoContext();
+  const [ml, setMl] = useState(userInfo?.mlCopo > 0 ? userInfo?.mlCopo + "" : "350");
   const [show, setShow] = useState<boolean>(false);
 
   function returnUser() {
     isChose(false);
     setShow(false);
+    setUserInfo((props) => ({
+      ...props,
+      mlCopo: parseInt(ml),
+      quantoTomeiDia: !props!.quantoTomeiDia ? 0 + parseInt(ml) : props!.quantoTomeiDia + parseInt(ml),
+    }));
   }
 
   useEffect(() => {

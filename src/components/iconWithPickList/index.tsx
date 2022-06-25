@@ -11,9 +11,11 @@ type props = {
   list2?: Array<string>;
   index?: number;
   index2?: number;
+  value1?: (e: number) => void;
+  value2?: (e: number) => void;
 };
 
-const ImgPickList: React.FC<props> = ({ img, list, list2, index = 0, index2 = 0 }) => {
+const ImgPickList: React.FC<props> = ({ img, list, list2, index = 0, index2 = 0, value1, value2 }) => {
   const [listData, setList] = useState(list);
   const [listData2, setList2] = useState(list2);
 
@@ -24,7 +26,7 @@ const ImgPickList: React.FC<props> = ({ img, list, list2, index = 0, index2 = 0 
         <RollPickerNative
           items={listData}
           index={index}
-          onIndexChange={(index: number) => console.log(index)}
+          onIndexChange={(index: number) => value1(index)}
           containerStyle={{ backgroundColor: "transparent" }}
           selectStyle={{ backgroundColor: "transparent" }}
           selectTextStyle={{ color: "#fff", fontFamily: "Inter_800ExtraBold", fontSize: 16 }}
@@ -36,7 +38,7 @@ const ImgPickList: React.FC<props> = ({ img, list, list2, index = 0, index2 = 0 
           <RollPickerNative
             items={listData2}
             index={index2}
-            onIndexChange={(index: number) => console.log(index)}
+            onIndexChange={(index: number) => value2(index)}
             containerStyle={{ backgroundColor: "transparent" }}
             selectStyle={{ backgroundColor: "transparent" }}
             selectTextStyle={{ color: "#fff", fontFamily: "Inter_800ExtraBold", fontSize: 16 }}
