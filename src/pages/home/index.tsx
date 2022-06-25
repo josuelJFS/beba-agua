@@ -8,6 +8,11 @@ import { Body, ButtonDrink, Footer, Header, Img } from "./style";
 import copoImg from "../../img/copobotao.png";
 import ModalDrink from "./modalDrink";
 import { useAutenticacaoContext } from "../../contexts/autenticacao";
+import { registerForPushNotificationsAsync, schedulePushNotification } from "../../service/pushNotification";
+import * as BackgroundFetch from "expo-background-fetch";
+import * as TaskManager from "expo-task-manager";
+
+const BACKGROUND_FETCH_TASK = "background-fetch";
 
 const Home: React.FC = () => {
   const { userInfo, setUserInfo } = useAutenticacaoContext();
@@ -30,7 +35,29 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     userInfo?.peso > 0 && setUserInfo((props) => ({ ...props, aguaDiariaIdeal: props!.peso * 35 }));
+    registerForPushNotificationsAsync();
+
+    TaskManager.defineTask(BACKGROUND_FETCH_TASK, async () => {
+      const now = new Date();
+      if (userInfo.horaDormi > now.getHours() && userInfo.horaAcorda < now.getHours()) await schedulePushNotification();
+      // Be sure to return the successful result type!
+      return BackgroundFetch.BackgroundFetchResult.NewData;
+    });
+
+    registerBackgroundFetchAsync();
   }, []);
+
+  async function registerBackgroundFetchAsync() {
+    return BackgroundFetch.registerTaskAsync(BACKGROUND_FETCH_TASK, {
+      minimumInterval: 60 * 30, // 15 minutes
+      stopOnTerminate: false, // android only,
+      startOnBoot: true, // android only
+    });
+  }
+
+  async function unregisterBackgroundFetchAsync() {
+    return BackgroundFetch.unregisterTaskAsync(BACKGROUND_FETCH_TASK);
+  }
 
   console.log(userInfo, porcent);
 

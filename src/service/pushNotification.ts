@@ -14,8 +14,8 @@ Notifications.setNotificationHandler({
 export async function schedulePushNotification() {
   await Notifications.scheduleNotificationAsync({
     content: {
-      title: "You've got mail! 📬",
-      body: "Here is the notification body",
+      title: "Hora de se hidratar",
+      body: "conclua sua meta!",
       data: { data: "goes here" },
     },
     trigger: { seconds: 2 },

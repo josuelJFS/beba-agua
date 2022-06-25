@@ -11,6 +11,7 @@ import { ContainerBody, ContainerFoot, ContainerHeader } from "./style";
 import peso from "../../img/peso.png";
 import { useNavigation } from "@react-navigation/native";
 import { useAutenticacaoContext, userInfoProps } from "../../contexts/autenticacao";
+import Load from "../../components/load";
 const listDados = [];
 
 for (let index = 0; index < 700; index++) {
@@ -23,6 +24,7 @@ const Peso: React.FC = () => {
 
   return (
     <AppContainerBackGround colors={["#35DBFF", "#0C9BFF"]} start={{ x: -0.3, y: 0.4 }}>
+      <Load />
       <ContainerHeader>
         <AppTitulo>Quanto você pesa ?</AppTitulo>
         <AppSubTitulo>

@@ -5,7 +5,7 @@
   "expo": {
     "name": "copodagua",
     "slug": "copodagua",
-    "version": "1.0.4",
+    "version": "1.0.5",
     "assetBundlePatterns": ["**/*"],
     "scheme": "copodagua",
 
@@ -24,7 +24,7 @@
     },
     "android": {
       "package": "com.josuel123.copodagua",
-      "versionCode": 2,
+      "versionCode": 3,
       "permissions": [],
       "config": {
         "googleMobileAdsAppId": "ca-app-pub-7795545248519145~4994489347"

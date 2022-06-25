@@ -5,6 +5,8 @@ export interface Icontext {
   setUserInfo: (e: React.SetStateAction<userInfoProps>) => void;
   userInfo: userInfoProps;
   logado: boolean;
+  load: boolean;
+  setLoad: (e: boolean) => void;
 }
 
 export type userInfoProps = {
@@ -24,12 +26,14 @@ const AutenticacaoContext = createContext<Icontext>({} as Icontext);
 const AutenticacaoProvider: React.FC = ({ children }) => {
   const [userInfo, setUserInfo] = useState<userInfoProps>({} as userInfoProps);
   const [logado, setLogado] = useState<boolean>(false);
+  const [load, setLoad] = useState<boolean>(false);
 
   useEffect(() => {
-    load();
+    loadApp();
   }, []);
 
-  async function load() {
+  async function loadApp() {
+    setLoad(true);
     const dadosUser = JSON.parse(await AsyncStorage.getItem("user")) || {};
     if (Object.values(dadosUser).length === 0) {
       setLogado(false);
@@ -37,10 +41,13 @@ const AutenticacaoProvider: React.FC = ({ children }) => {
       setUserInfo(dadosUser);
       setLogado(true);
     }
+    setLoad(false);
   }
 
   return (
-    <AutenticacaoContext.Provider value={{ setUserInfo, userInfo, logado }}>{children}</AutenticacaoContext.Provider>
+    <AutenticacaoContext.Provider value={{ setUserInfo, userInfo, logado, load, setLoad }}>
+      {children}
+    </AutenticacaoContext.Provider>
   );
 };
 
