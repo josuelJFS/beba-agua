@@ -5,6 +5,7 @@ import { AdMobBanner, AdMobInterstitial, PublisherBanner, AdMobRewarded, setTest
 import { AppContainerBackGround } from "../../components/uiAppStyle/style";
 import { Body, ButtonDrink, Footer, Header, Img } from "./style";
 import copoImg from "../../img/copobotao.png";
+import ProcentagemConsumo from "../../components/porcentagemConsumo";
 
 // Set global test device ID
 
@@ -27,7 +28,9 @@ const Home: React.FC = () => {
   return (
     <AppContainerBackGround colors={["#35DBFF", "#0C9BFF"]} start={{ x: -0.3, y: 0.4 }}>
       <Header></Header>
-      <Body></Body>
+      <Body>
+        <ProcentagemConsumo></ProcentagemConsumo>
+      </Body>
       <Footer>
         <ButtonDrink>
           <Img resizeMode="cover" source={copoImg} />
@@ -35,7 +38,7 @@ const Home: React.FC = () => {
       </Footer>
       <AdMobBanner
         bannerSize="fullBanner"
-        adUnitID={adUnitID} // Test ID, Replace with your-admob-unit-id
+        adUnitID="ca-app-pub-3940256099942544/6300978111" // Test ID, Replace with your-admob-unit-id
         servePersonalizedAds // true or false
         onDidFailToReceiveAdWithError={(e) => console.log(e)}
       />
