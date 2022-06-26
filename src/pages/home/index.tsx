@@ -14,6 +14,15 @@ import * as TaskManager from "expo-task-manager";
 
 const BACKGROUND_FETCH_TASK = "background-fetch";
 
+TaskManager.defineTask(BACKGROUND_FETCH_TASK, async () => {
+  const now = new Date();
+  //if (userInfo.horaDormi > now.getHours() && userInfo.horaAcorda < now.getHours()) ;
+  await schedulePushNotification();
+
+  // Be sure to return the successful result type!
+  return true;
+});
+
 const Home: React.FC = () => {
   const { userInfo, setUserInfo } = useAutenticacaoContext();
   const [showModal, setShowModal] = useState(false);
@@ -37,13 +46,7 @@ const Home: React.FC = () => {
     userInfo?.peso > 0 && setUserInfo((props) => ({ ...props, aguaDiariaIdeal: props!.peso * 35 }));
     registerForPushNotificationsAsync();
 
-    TaskManager.defineTask(BACKGROUND_FETCH_TASK, async () => {
-      const now = new Date();
-      if (userInfo.horaDormi > now.getHours() && userInfo.horaAcorda < now.getHours()) await schedulePushNotification();
-      // Be sure to return the successful result type!
-      return BackgroundFetch.BackgroundFetchResult.NewData;
-    });
-
+    //unregisterBackgroundFetchAsync();
     registerBackgroundFetchAsync();
   }, []);
 
