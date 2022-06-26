@@ -13,6 +13,7 @@ import * as BackgroundFetch from "expo-background-fetch";
 import * as TaskManager from "expo-task-manager";
 import ProcentagemConsumo from "../../components/porcentagemConsumo";
 import CircularProgress from "../../components/porcentagemConsumo";
+import HeaderCups from "../../components/headerCups/indes";
 
 const BACKGROUND_FETCH_TASK = "background-fetch";
 
@@ -75,7 +76,9 @@ const Home: React.FC = () => {
 
   return (
     <AppContainerBackGround colors={["#35DBFF", "#0C9BFF"]} start={{ x: -0.3, y: 0.4 }}>
-      <Header></Header>
+      <Header>
+        <HeaderCups></HeaderCups>
+      </Header>
       <Body>
         <CircularProgress percentage={Math.floor(porcent)}>
           <PorcentInfo

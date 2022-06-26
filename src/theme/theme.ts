@@ -4,6 +4,7 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from "react-nat
 export const Theme = {
   colors: {
     white: "#ffffff",
+    GreyMedium1: "#AFAFAF",
     GreyMedium2: "#575757",
     blueModal: "#00C2FF",
     blueFont1: "#0096B7",
