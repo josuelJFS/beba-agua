@@ -4,10 +4,12 @@ import { Theme } from "../../theme/theme";
 import { MotiView } from "moti";
 
 export const Header = styled.View`
-  flex: 1;
+  flex: 1.5;
 `;
 export const Body = styled.View`
   flex: 2;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const Footer = styled.View`
@@ -82,5 +84,10 @@ export const ContainerFooter = styled.View`
 export const ButtonName = styled.Text`
   font-family: ${Theme.font.family.titulo1};
   font-size: ${Theme.func.wp(7)}px;
+  color: ${Theme.colors.white};
+`;
+export const PorcentInfo = styled.Text`
+  font-family: ${Theme.font.family.titulo1};
+  font-size: ${Theme.func.wp(10)}px;
   color: ${Theme.colors.white};
 `;

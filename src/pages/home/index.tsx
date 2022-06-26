@@ -1,16 +1,18 @@
 import React, { useEffect, useRef, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { TouchableOpacity, Text } from "react-native";
+import { TouchableOpacity, Text, View } from "react-native";
 import * as Device from "expo-device";
 import { AdMobBanner, AdMobInterstitial, PublisherBanner, AdMobRewarded, setTestDeviceIDAsync } from "expo-ads-admob";
 import { AppContainerBackGround } from "../../components/uiAppStyle/style";
-import { Body, ButtonDrink, Footer, Header, Img } from "./style";
+import { Body, ButtonDrink, Footer, Header, Img, PorcentInfo } from "./style";
 import copoImg from "../../img/copobotao.png";
 import ModalDrink from "./modalDrink";
 import { useAutenticacaoContext } from "../../contexts/autenticacao";
 import { registerForPushNotificationsAsync, schedulePushNotification } from "../../service/pushNotification";
 import * as BackgroundFetch from "expo-background-fetch";
 import * as TaskManager from "expo-task-manager";
+import ProcentagemConsumo from "../../components/porcentagemConsumo";
+import CircularProgress from "../../components/porcentagemConsumo";
 
 const BACKGROUND_FETCH_TASK = "background-fetch";
 
@@ -75,7 +77,16 @@ const Home: React.FC = () => {
     <AppContainerBackGround colors={["#35DBFF", "#0C9BFF"]} start={{ x: -0.3, y: 0.4 }}>
       <Header></Header>
       <Body>
-        <ProcentagemConsumo></ProcentagemConsumo>
+        <CircularProgress percentage={Math.floor(porcent)}>
+          <PorcentInfo
+            onPress={() => {
+              setUserInfo((props) => ({ ...props, quantoTomeiDia: 0 }));
+              setPorcent(0);
+            }}
+          >
+            {Math.floor(porcent)}%
+          </PorcentInfo>
+        </CircularProgress>
       </Body>
       <Footer>
         <ButtonDrink onPress={() => setShowModal(true)}>
