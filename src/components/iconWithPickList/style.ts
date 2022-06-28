@@ -10,8 +10,8 @@ export const Container = styled.View`
   align-items: center;
 `;
 export const Img = styled.Image`
-  width: ${Theme.func.wp(42)}px;
-  height: ${Theme.func.wp(42)}px;
+  width: 130px;
+  height: 130px;
   margin-right: 20px;
 `;
 

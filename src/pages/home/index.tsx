@@ -16,6 +16,14 @@ import CircularProgress from "../../components/porcentagemConsumo";
 import CopsHeader from "../../components/copsHeader";
 
 const BACKGROUND_FETCH_TASK = "copoAlertas";
+TaskManager.defineTask(BACKGROUND_FETCH_TASK, async () => {
+  const now = new Date();
+  // if (userInfo.horaDormi > now.getHours() && userInfo.horaAcorda < now.getHours()) return;
+  await schedulePushNotification();
+
+  // Be sure to return the successful result type!
+  return true;
+});
 
 const Home: React.FC = () => {
   const { userInfo, setUserInfo } = useAutenticacaoContext();
@@ -37,14 +45,6 @@ const Home: React.FC = () => {
   }, [userInfo]);
 
   useEffect(() => {
-    TaskManager.defineTask(BACKGROUND_FETCH_TASK, async () => {
-      const now = new Date();
-      // if (userInfo.horaDormi > now.getHours() && userInfo.horaAcorda < now.getHours()) return;
-      await schedulePushNotification();
-
-      // Be sure to return the successful result type!
-      return true;
-    });
     userInfo?.peso > 0 && setUserInfo((props) => ({ ...props, aguaDiariaIdeal: props!.peso * 35 }));
     registerForPushNotificationsAsync();
 
@@ -54,7 +54,7 @@ const Home: React.FC = () => {
 
   async function registerBackgroundFetchAsync() {
     return BackgroundFetch.registerTaskAsync(BACKGROUND_FETCH_TASK, {
-      minimumInterval: 60 * 60, // 15 minutes
+      minimumInterval: 60 * 10, // 15 minutes
       stopOnTerminate: false, // android only,
       startOnBoot: true, // android only
     });
