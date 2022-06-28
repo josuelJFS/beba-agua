@@ -53,8 +53,8 @@ const CircularProgress: React.FC<props> = ({
   blankColor = Theme.colors.white,
   donutColor = Theme.colors.blueFont1,
   fillColor = "white",
-  progressWidth = 100,
-  size = 250,
+  progressWidth = 80,
+  size = 200,
   children,
 }) => {
   const half = size / 2;

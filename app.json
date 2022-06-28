@@ -5,9 +5,19 @@
   "expo": {
     "name": "copodagua",
     "slug": "copodagua",
-    "version": "1.0.5",
+    "version": "1.0.7",
     "assetBundlePatterns": ["**/*"],
     "scheme": "copodagua",
+
+    "plugins": [
+      [
+        "expo-notifications",
+        {
+          "icon": "./src/img/icon.png",
+          "color": "#ffffff"
+        }
+      ]
+    ],
 
     "icon": "./src/img/icon.png",
     "splash": {
@@ -24,7 +34,7 @@
     },
     "android": {
       "package": "com.josuel123.copodagua",
-      "versionCode": 3,
+      "versionCode": 5,
       "permissions": [],
       "config": {
         "googleMobileAdsAppId": "ca-app-pub-7795545248519145~4994489347"

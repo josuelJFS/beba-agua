@@ -4,7 +4,9 @@ import { Theme } from "../../theme/theme";
 import { MotiView } from "moti";
 
 export const Header = styled.View`
-  flex: 1.5;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
 `;
 export const Body = styled.View`
   flex: 2;

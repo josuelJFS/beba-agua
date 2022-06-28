@@ -8,6 +8,8 @@ export const Theme = {
     blueModal: "#00C2FF",
     blueFont1: "#0096B7",
     blueButtom: "#35DBFF",
+    blueCop: "#5CE9FF",
+    blueCopCheio: "#007FB6",
   },
   font: {
     family: {

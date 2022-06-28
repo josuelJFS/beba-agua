@@ -3,7 +3,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { TouchableOpacity, Text, View } from "react-native";
 import * as Device from "expo-device";
 import { AdMobBanner, AdMobInterstitial, PublisherBanner, AdMobRewarded, setTestDeviceIDAsync } from "expo-ads-admob";
-import { AppContainerBackGround } from "../../components/uiAppStyle/style";
+import { AppContainerBackGround, AppSubTitulo, AppTitulo } from "../../components/uiAppStyle/style";
 import { Body, ButtonDrink, Footer, Header, Img, PorcentInfo } from "./style";
 import copoImg from "../../img/copobotao.png";
 import ModalDrink from "./modalDrink";
@@ -13,17 +13,9 @@ import * as BackgroundFetch from "expo-background-fetch";
 import * as TaskManager from "expo-task-manager";
 import ProcentagemConsumo from "../../components/porcentagemConsumo";
 import CircularProgress from "../../components/porcentagemConsumo";
+import CopsHeader from "../../components/copsHeader";
 
-const BACKGROUND_FETCH_TASK = "background-fetch";
-
-TaskManager.defineTask(BACKGROUND_FETCH_TASK, async () => {
-  const now = new Date();
-  //if (userInfo.horaDormi > now.getHours() && userInfo.horaAcorda < now.getHours()) ;
-  await schedulePushNotification();
-
-  // Be sure to return the successful result type!
-  return true;
-});
+const BACKGROUND_FETCH_TASK = "copoAlertas";
 
 const Home: React.FC = () => {
   const { userInfo, setUserInfo } = useAutenticacaoContext();
@@ -45,6 +37,14 @@ const Home: React.FC = () => {
   }, [userInfo]);
 
   useEffect(() => {
+    TaskManager.defineTask(BACKGROUND_FETCH_TASK, async () => {
+      const now = new Date();
+      // if (userInfo.horaDormi > now.getHours() && userInfo.horaAcorda < now.getHours()) return;
+      await schedulePushNotification();
+
+      // Be sure to return the successful result type!
+      return true;
+    });
     userInfo?.peso > 0 && setUserInfo((props) => ({ ...props, aguaDiariaIdeal: props!.peso * 35 }));
     registerForPushNotificationsAsync();
 
@@ -54,7 +54,7 @@ const Home: React.FC = () => {
 
   async function registerBackgroundFetchAsync() {
     return BackgroundFetch.registerTaskAsync(BACKGROUND_FETCH_TASK, {
-      minimumInterval: 60 * 30, // 15 minutes
+      minimumInterval: 60 * 60, // 15 minutes
       stopOnTerminate: false, // android only,
       startOnBoot: true, // android only
     });
@@ -64,21 +64,15 @@ const Home: React.FC = () => {
     return BackgroundFetch.unregisterTaskAsync(BACKGROUND_FETCH_TASK);
   }
 
-  console.log(userInfo, porcent);
-
-  async function loadAnuncio() {
-    try {
-      await AdMobInterstitial.setAdUnitID("ca-app-pub-7795545248519145/9663474042"); // Test ID, Replace with your-admob-unit-id
-      await AdMobInterstitial.requestAdAsync();
-      await AdMobInterstitial.showAdAsync();
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
   return (
     <AppContainerBackGround colors={["#35DBFF", "#0C9BFF"]} start={{ x: -0.3, y: 0.4 }}>
-      <Header></Header>
+      <Header>
+        <AppTitulo>Meta de Consumo Diário </AppTitulo>
+        <AppSubTitulo>
+          {userInfo.quantoTomeiDia} / {userInfo.aguaDiariaIdeal} ml
+        </AppSubTitulo>
+        <CopsHeader porcent={Math.floor(porcent)} />
+      </Header>
       <Body>
         <CircularProgress percentage={Math.floor(porcent)}>
           <PorcentInfo
@@ -98,7 +92,7 @@ const Home: React.FC = () => {
       </Footer>
       <AdMobBanner
         bannerSize="fullBanner"
-        adUnitID="ca-app-pub-3940256099942544/6300978111" // Test ID, Replace with your-admob-unit-id
+        adUnitID={adUnitID} // Test ID, Replace with your-admob-unit-id
         servePersonalizedAds // true or false
         onDidFailToReceiveAdWithError={(e) => console.log(e)}
       />
