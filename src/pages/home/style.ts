@@ -20,17 +20,19 @@ export const Footer = styled.View`
   align-items: center;
 `;
 export const Img = styled.Image`
-  width: ${Theme.func.wp(22)}px;
-  height: ${Theme.func.wp(22)}px;
+  width: 70px;
+  height: 70px;
 `;
 
 export const ButtonDrink = styled.TouchableOpacity`
-  width: ${Theme.func.wp(22)}px;
-  height: ${Theme.func.wp(22)}px;
+  width: 100px;
+  height: 100px;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const ModalBox = styled.View`
-  width: ${Theme.func.wp(100)}px;
+  width: 100%;
   height: 200px;
   background-color: ${Theme.colors.blueModal};
   position: absolute;
@@ -38,13 +40,13 @@ export const ModalBox = styled.View`
 `;
 
 export const ImgModal = styled.Image`
-  width: ${Theme.func.wp(15)}px;
-  height: ${Theme.func.wp(15)}px;
+  width: 50px;
+  height: 50px;
 `;
 
 export const Igual = styled.Text`
   color: ${Theme.colors.white};
-  font-size: ${Theme.func.wp(10)}px;
+  font-size: ${Theme.font.size.titulo2};
   font-family: ${Theme.font.family.titulo1};
   margin-right: 6px;
   margin-left: 6px;
@@ -58,9 +60,9 @@ export const ContainerTop = styled.View`
 `;
 
 export const InputML = styled.TextInput`
-  width: ${Theme.func.wp(25)}px;
+  width: 80px;
   padding: 6px;
-  font-size: ${Theme.func.wp(5)}px;
+  font-size: ${Theme.font.size.body4};
   color: ${Theme.colors.blueFont1};
   font-family: ${Theme.font.family.titulo1};
   height: 47px;
@@ -85,11 +87,11 @@ export const ContainerFooter = styled.View`
 
 export const ButtonName = styled.Text`
   font-family: ${Theme.font.family.titulo1};
-  font-size: ${Theme.func.wp(7)}px;
+  font-size: ${Theme.font.size.titulo2};
   color: ${Theme.colors.white};
 `;
 export const PorcentInfo = styled.Text`
   font-family: ${Theme.font.family.titulo1};
-  font-size: ${Theme.func.wp(10)}px;
+  font-size: ${Theme.font.size.titulo3};
   color: ${Theme.colors.white};
 `;

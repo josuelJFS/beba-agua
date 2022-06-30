@@ -1,14 +1,17 @@
 import * as Device from "expo-device";
 import * as Notifications from "expo-notifications";
+import { AndroidNotificationPriority, AndroidNotificationVisibility } from "expo-notifications";
 import React, { useState, useEffect, useRef } from "react";
 import { Text, View, Button, Platform } from "react-native";
 
 Notifications.setNotificationHandler({
-  handleNotification: async () => ({
-    shouldShowAlert: true,
-    shouldPlaySound: true,
-    shouldSetBadge: true,
-  }),
+  handleNotification: async () => {
+    return {
+      shouldShowAlert: true,
+      shouldPlaySound: true,
+      shouldSetBadge: true,
+    };
+  },
 });
 
 export async function schedulePushNotification() {
@@ -16,10 +19,23 @@ export async function schedulePushNotification() {
     content: {
       title: "Hora de se hidratar",
       body: "conclua sua meta!",
-      data: { data: "goes here" },
+      priority: AndroidNotificationPriority.HIGH,
+      vibrate: [0, 250, 250, 250],
     },
-    trigger: { seconds: 2 },
+    trigger: null,
   });
+}
+
+export async function logNextTriggerDate() {
+  try {
+    const nextTriggerDate = await Notifications.getNextTriggerDateAsync({
+      hour: 0,
+      minute: 1,
+    });
+    console.log(nextTriggerDate === null ? "No next trigger date" : new Date(nextTriggerDate));
+  } catch (e) {
+    console.warn(`Couldn't have calculated next trigger date: ${e}`);
+  }
 }
 
 export async function registerForPushNotificationsAsync() {
@@ -43,9 +59,10 @@ export async function registerForPushNotificationsAsync() {
   if (Platform.OS === "android") {
     Notifications.setNotificationChannelAsync("default", {
       name: "default",
-      importance: Notifications.AndroidImportance.MAX,
+      importance: Notifications.AndroidImportance.HIGH,
       vibrationPattern: [0, 250, 250, 250],
       lightColor: "#FF231F7C",
+      showBadge: true,
     });
   }
 

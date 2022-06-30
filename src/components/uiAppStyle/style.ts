@@ -2,6 +2,7 @@ import styled from "styled-components/native";
 import { ImageBackground, StyleSheet } from "react-native";
 import { Theme } from "../../theme/theme";
 import { LinearGradient } from "expo-linear-gradient";
+import Animated, { Easing, useSharedValue, withTiming } from "react-native-reanimated";
 
 export const AppContainerBackGround = styled(LinearGradient)`
   flex: 1;
@@ -14,7 +15,7 @@ export const AppTitulo = styled.Text`
   margin: 12px;
 `;
 
-export const AppSubTitulo = styled.Text`
+export const AppSubTitulo = styled(Animated.Text)`
   font-family: ${Theme.font.family.subtitulo};
   font-size: ${Theme.font.size.body3};
   color: ${Theme.colors.white};

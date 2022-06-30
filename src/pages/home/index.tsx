@@ -14,12 +14,19 @@ import * as TaskManager from "expo-task-manager";
 import ProcentagemConsumo from "../../components/porcentagemConsumo";
 import CircularProgress from "../../components/porcentagemConsumo";
 import CopsHeader from "../../components/copsHeader";
+import { Easing, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
+import AnimateNumber from "react-native-animate-number";
+import { AnimatedCircularProgress, AnimatedCircularProgressProps } from "react-native-circular-progress";
+
+// eslint-disable-next-line prefer-const
+let hora_acorda = 0;
+// eslint-disable-next-line prefer-const
+let hora_dorme = 0;
 
 const BACKGROUND_FETCH_TASK = "copoAlertas";
 TaskManager.defineTask(BACKGROUND_FETCH_TASK, async () => {
   const now = new Date();
-  // if (userInfo.horaDormi > now.getHours() && userInfo.horaAcorda < now.getHours()) return;
-  await schedulePushNotification();
+  if (now.getHours() > hora_acorda && now.getHours() < hora_dorme) schedulePushNotification();
 
   // Be sure to return the successful result type!
   return true;
@@ -29,6 +36,7 @@ const Home: React.FC = () => {
   const { userInfo, setUserInfo } = useAutenticacaoContext();
   const [showModal, setShowModal] = useState(false);
   const [porcent, setPorcent] = useState<number>(0);
+
   const testIDbanner = "ca-app-pub-3940256099942544/6300978111";
   const productionIDbanner = "ca-app-pub-7795545248519145/2047147404";
   // Is a real device and running in production.
@@ -42,19 +50,30 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     setUserInfosLoad();
+    hora_dorme = userInfo.horaDormi;
+    hora_acorda = userInfo.horaAcorda;
   }, [userInfo]);
 
   useEffect(() => {
     userInfo?.peso > 0 && setUserInfo((props) => ({ ...props, aguaDiariaIdeal: props!.peso * 35 }));
-    registerForPushNotificationsAsync();
+    if (userInfo?.day < new Date().getDate()) {
+      setUserInfo((props) => ({ ...props, day: new Date().getDate(), quantoTomeiDia: 0 }));
+      setPorcent(0);
+    }
 
-    //unregisterBackgroundFetchAsync();
+    if (!userInfo?.day) {
+      setUserInfo((props) => ({ ...props, day: new Date().getDate() }));
+    }
+
+    registerForPushNotificationsAsync();
     registerBackgroundFetchAsync();
+
+    //unregisterBackgroundFetchAsync
   }, []);
 
   async function registerBackgroundFetchAsync() {
     return BackgroundFetch.registerTaskAsync(BACKGROUND_FETCH_TASK, {
-      minimumInterval: 60 * 10, // 15 minutes
+      minimumInterval: 60 * 40,
       stopOnTerminate: false, // android only,
       startOnBoot: true, // android only
     });
@@ -68,22 +87,28 @@ const Home: React.FC = () => {
     <AppContainerBackGround colors={["#35DBFF", "#0C9BFF"]} start={{ x: -0.3, y: 0.4 }}>
       <Header>
         <AppTitulo>Meta de Consumo Diário </AppTitulo>
-        <AppSubTitulo>
-          {userInfo.quantoTomeiDia} / {userInfo.aguaDiariaIdeal} ml
+        <AppSubTitulo
+          onPress={() => {
+            setUserInfo((props) => ({ ...props, day: new Date().getDate(), quantoTomeiDia: 0 }));
+            setPorcent(0);
+          }}
+        >
+          <AnimateNumber countBy={3} interval={1} value={userInfo.quantoTomeiDia} timing="easeIn" /> /{" "}
+          {userInfo.aguaDiariaIdeal} ml
         </AppSubTitulo>
         <CopsHeader porcent={Math.floor(porcent)} />
       </Header>
       <Body>
-        <CircularProgress percentage={Math.floor(porcent)}>
-          <PorcentInfo
-            onPress={() => {
-              setUserInfo((props) => ({ ...props, quantoTomeiDia: 0 }));
-              setPorcent(0);
-            }}
-          >
-            {Math.floor(porcent)}%
-          </PorcentInfo>
-        </CircularProgress>
+        <AnimatedCircularProgress
+          duration={2000}
+          size={200}
+          width={25}
+          fill={porcent}
+          tintColor="#00e0ff"
+          backgroundColor="#3d5875"
+        >
+          {(fill) => <PorcentInfo>{parseInt(fill)}%</PorcentInfo>}
+        </AnimatedCircularProgress>
       </Body>
       <Footer>
         <ButtonDrink onPress={() => setShowModal(true)}>

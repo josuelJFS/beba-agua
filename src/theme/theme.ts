@@ -17,11 +17,12 @@ export const Theme = {
       subtitulo: "Inter_600SemiBold",
     },
     size: {
-      body3_5: wp(3.5) + "px",
-      body3: wp(3.1) + "px",
-      body4: wp(4) + "px",
-      titulo: wp(5) + "px",
-      titulo2: wp(5.5) + "px",
+      body3_5: 15 + "px",
+      body3: 12 + "px",
+      body4: 18 + "px",
+      titulo: 19 + "px",
+      titulo2: 20 + "px",
+      titulo3: 30 + "px",
     },
   },
   func: {
