@@ -15,20 +15,27 @@ import ProcentagemConsumo from "../../components/porcentagemConsumo";
 import CircularProgress from "../../components/porcentagemConsumo";
 import CopsHeader from "../../components/copsHeader";
 import { Easing, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
-import AnimateNumber from "react-native-animate-number";
 import { AnimatedCircularProgress, AnimatedCircularProgressProps } from "react-native-circular-progress";
+import * as Notifications from "expo-notifications";
+import {
+  AndroidNotificationPriority,
+  AndroidNotificationVisibility,
+  cancelAllScheduledNotificationsAsync,
+  getAllScheduledNotificationsAsync,
+} from "expo-notifications";
 
 // eslint-disable-next-line prefer-const
 let hora_acorda = 0;
 // eslint-disable-next-line prefer-const
 let hora_dorme = 0;
+// eslint-disable-next-line prefer-const
+let dataOntem = "";
 
 const BACKGROUND_FETCH_TASK = "copoAlertas";
 TaskManager.defineTask(BACKGROUND_FETCH_TASK, async () => {
   const now = new Date();
-  if (now.getHours() > hora_acorda && now.getHours() < hora_dorme) schedulePushNotification();
+  // if (now.getHours() > hora_acorda && now.getHours() < hora_dorme) schedulePushNotification();
 
-  // Be sure to return the successful result type!
   return true;
 });
 
@@ -36,9 +43,11 @@ const Home: React.FC = () => {
   const { userInfo, setUserInfo } = useAutenticacaoContext();
   const [showModal, setShowModal] = useState(false);
   const [porcent, setPorcent] = useState<number>(0);
+  const notificationListener = useRef(null);
+  const responseListener = useRef(null);
 
   const testIDbanner = "ca-app-pub-3940256099942544/6300978111";
-  const productionIDbanner = "ca-app-pub-7795545248519145/2047147404";
+  const productionIDbanner = "ca-app-pub-7795545248519145/7128125251";
   // Is a real device and running in production.
   const adUnitID = Device.isDevice && !__DEV__ ? productionIDbanner : testIDbanner;
 
@@ -46,7 +55,42 @@ const Home: React.FC = () => {
     await AsyncStorage.setItem("user", JSON.stringify(userInfo));
     userInfo.quantoTomeiDia > 0 && setPorcent((userInfo.quantoTomeiDia / userInfo.aguaDiariaIdeal) * 100);
     //await AsyncStorage.removeItem("user");
+    const now = new Date();
+    const yesterday = new Date(userInfo?.data);
+
+    if (
+      new Date(yesterday.getFullYear(), yesterday.getMonth(), yesterday.getDate()) <
+      new Date(now.getFullYear(), now.getMonth(), now.getDate())
+    ) {
+      setUserInfo((props) => ({
+        ...props,
+        data: new Date(now.getFullYear(), now.getMonth(), now.getDate()),
+        quantoTomeiDia: 0,
+      }));
+      setPorcent(0);
+    }
+    if (!userInfo?.data) {
+      setUserInfo((props) => ({ ...props, data: new Date(now.getFullYear(), now.getMonth(), now.getDate()) }));
+    }
+    return;
   }
+
+  useEffect(() => {
+    registerForPushNotificationsAsync();
+    //registerBackgroundFetchAsync();
+    schedulePushNotification(userInfo?.horaAcorda, userInfo?.horaDormi);
+
+    notificationListener.current = Notifications.addNotificationReceivedListener((notification) => {});
+
+    responseListener.current = Notifications.addNotificationResponseReceivedListener((response) => {
+      console.log(response);
+    });
+
+    return () => {
+      Notifications.removeNotificationSubscription(notificationListener.current);
+      Notifications.removeNotificationSubscription(responseListener.current);
+    };
+  }, []);
 
   useEffect(() => {
     setUserInfosLoad();
@@ -56,19 +100,8 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     userInfo?.peso > 0 && setUserInfo((props) => ({ ...props, aguaDiariaIdeal: props!.peso * 35 }));
-    if (userInfo?.day < new Date().getDate()) {
-      setUserInfo((props) => ({ ...props, day: new Date().getDate(), quantoTomeiDia: 0 }));
-      setPorcent(0);
-    }
 
-    if (!userInfo?.day) {
-      setUserInfo((props) => ({ ...props, day: new Date().getDate() }));
-    }
-
-    registerForPushNotificationsAsync();
-    registerBackgroundFetchAsync();
-
-    //unregisterBackgroundFetchAsync
+    //unregisterBackgroundFetchAsync();
   }, []);
 
   async function registerBackgroundFetchAsync() {
@@ -83,18 +116,20 @@ const Home: React.FC = () => {
     return BackgroundFetch.unregisterTaskAsync(BACKGROUND_FETCH_TASK);
   }
 
+  function dateRevert(e: string) {
+    if (!e) return undefined;
+    const strData = e;
+    const partesData = strData.split("/");
+    const data = new Date(parseInt(partesData[2]), parseInt(partesData[1]) - 1, parseInt(partesData[0]));
+    return data;
+  }
+
   return (
     <AppContainerBackGround colors={["#35DBFF", "#0C9BFF"]} start={{ x: -0.3, y: 0.4 }}>
       <Header>
         <AppTitulo>Meta de Consumo Diário </AppTitulo>
-        <AppSubTitulo
-          onPress={() => {
-            setUserInfo((props) => ({ ...props, day: new Date().getDate(), quantoTomeiDia: 0 }));
-            setPorcent(0);
-          }}
-        >
-          <AnimateNumber countBy={3} interval={1} value={userInfo.quantoTomeiDia} timing="easeIn" /> /{" "}
-          {userInfo.aguaDiariaIdeal} ml
+        <AppSubTitulo>
+          {userInfo.quantoTomeiDia} / {userInfo.aguaDiariaIdeal} ml
         </AppSubTitulo>
         <CopsHeader porcent={Math.floor(porcent)} />
       </Header>
@@ -116,10 +151,10 @@ const Home: React.FC = () => {
         </ButtonDrink>
       </Footer>
       <AdMobBanner
+        style={{ alignItems: "center", justifyContent: "center" }}
         bannerSize="fullBanner"
-        adUnitID={adUnitID} // Test ID, Replace with your-admob-unit-id
-        servePersonalizedAds // true or false
-        onDidFailToReceiveAdWithError={(e) => console.log(e)}
+        adUnitID="ca-app-pub-7795545248519145/7128125251" // Test ID, Replace with your-admob-unit-id
+        onDidFailToReceiveAdWithError={(e) => alert(e)}
       />
       <ModalDrink isChose={setShowModal} showModal={showModal} />
     </AppContainerBackGround>

@@ -19,7 +19,7 @@ export type userInfoProps = {
   porcentagemAguaDiaria?: number;
   quantoTomeiDia?: number;
   mlCopo?: number;
-  day?: number;
+  data?: Date;
 };
 
 const AutenticacaoContext = createContext<Icontext>({} as Icontext);

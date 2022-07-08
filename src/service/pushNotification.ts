@@ -1,6 +1,12 @@
+/* eslint-disable prefer-const */
 import * as Device from "expo-device";
 import * as Notifications from "expo-notifications";
-import { AndroidNotificationPriority, AndroidNotificationVisibility } from "expo-notifications";
+import {
+  AndroidNotificationPriority,
+  AndroidNotificationVisibility,
+  cancelAllScheduledNotificationsAsync,
+  getAllScheduledNotificationsAsync,
+} from "expo-notifications";
 import React, { useState, useEffect, useRef } from "react";
 import { Text, View, Button, Platform } from "react-native";
 
@@ -14,7 +20,22 @@ Notifications.setNotificationHandler({
   },
 });
 
-export async function schedulePushNotification() {
+export async function schedulePushNotification(acorda: number, dormi: number) {
+  if (!acorda || !dormi) return;
+  let arrayNotifications = [];
+  const pushExist = await getAllScheduledNotificationsAsync();
+  //await cancelAllScheduledNotificationsAsync()
+  if (pushExist.length == 0) {
+    for (let index = acorda; index < dormi; index++) arrayNotifications.push(index);
+    arrayNotifications.forEach(async (value) => {
+      await execultTimeIntervalNotification(value);
+    });
+  } else {
+    //console.log(pushExist);
+  }
+}
+
+async function execultTimeIntervalNotification(value) {
   await Notifications.scheduleNotificationAsync({
     content: {
       title: "Hora de se hidratar",
@@ -22,7 +43,11 @@ export async function schedulePushNotification() {
       priority: AndroidNotificationPriority.HIGH,
       vibrate: [0, 250, 250, 250],
     },
-    trigger: null,
+    trigger: {
+      hour: value,
+      minute: 0,
+      repeats: true,
+    },
   });
 }
 

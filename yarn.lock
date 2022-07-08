@@ -4413,6 +4413,11 @@ expo-notifications@~0.14.0:
     unimodules-task-manager-interface "~7.1.0"
     uuid "^3.4.0"
 
+expo-permissions@~13.1.0:
+  version "13.1.1"
+  resolved "https://registry.yarnpkg.com/expo-permissions/-/expo-permissions-13.1.1.tgz#67414ea027d0e7db61f1bfa83a98ef6af512b59e"
+  integrity sha512-vo2sDlxDJE+THLhUO7G8kMHYnNJoMvYjurFNRvHjEvZAUvFmRgulejr8HlzCpb820brXNg+QWalZCtyA5oQkqg==
+
 expo-random@~12.1.1:
   version "12.1.2"
   resolved "https://registry.yarnpkg.com/expo-random/-/expo-random-12.1.2.tgz#ed4e7f85728b609bcb373bc4c4a1a05192ec44b9"
@@ -7785,13 +7790,6 @@ react-native-alarm-clock@^2.0.2:
   resolved "https://registry.yarnpkg.com/react-native-alarm-clock/-/react-native-alarm-clock-2.0.2.tgz#acd9871ec1d1ce508abc3bafead0b0b8a71a8769"
   integrity sha512-Ianf/xYmnThRScl3Ew0N9AfOAmiRyB2DaXrOI4Mu4+0mmINtTccHs5N2UAyb5Z6c/RwPNrViRIFc1KvTA0b9hg==
 
-react-native-animate-number@^0.1.2:
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/react-native-animate-number/-/react-native-animate-number-0.1.2.tgz#d41c5a784e05f9d788dafbf7b158584c65e8cf47"
-  integrity sha512-cZmKlQcJ+J2ze8omc/2eeKVdUJfcQ+pGr6bOgnqCTotHWmFOW8rhpk9mfLTKhg8+UhQ7v974LpTs8bnCAH3PwA==
-  dependencies:
-    react-timer-mixin "^0.13.3"
-
 react-native-circular-progress@^1.3.7:
   version "1.3.7"
   resolved "https://registry.yarnpkg.com/react-native-circular-progress/-/react-native-circular-progress-1.3.7.tgz#cc430fbc612bd01134a8fc9667be107591ae6959"
@@ -8034,11 +8032,6 @@ react-test-renderer@~16.13.1:
     prop-types "^15.6.2"
     react-is "^16.8.6"
     scheduler "^0.19.1"
-
-react-timer-mixin@^0.13.3:
-  version "0.13.4"
-  resolved "https://registry.yarnpkg.com/react-timer-mixin/-/react-timer-mixin-0.13.4.tgz#75a00c3c94c13abe29b43d63b4c65a88fc8264d3"
-  integrity sha512-4+ow23tp/Tv7hBM5Az5/Be/eKKF7DIvJ09voz5LyHGQaqqz9WV8YMs31eFvcYQs7d451LSg7kDJV70XYN/Ug/Q==
 
 react@17.0.1:
   version "17.0.1"
