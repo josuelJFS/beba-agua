@@ -34,6 +34,7 @@
     "expo-av": "~10.2.0",
     "expo-background-fetch": "~10.1.0",
     "expo-blur": "~11.0.0",
+    "expo-calendar": "~10.1.0",
     "expo-constants": "~13.0.1",
     "expo-device": "~4.1.0",
     "expo-font": "~10.0.4",

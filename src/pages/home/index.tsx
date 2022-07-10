@@ -152,9 +152,9 @@ const Home: React.FC = () => {
       </Footer>
       <AdMobBanner
         style={{ alignItems: "center", justifyContent: "center" }}
-        bannerSize="fullBanner"
-        adUnitID="ca-app-pub-7795545248519145/7128125251" // Test ID, Replace with your-admob-unit-id
-        onDidFailToReceiveAdWithError={(e) => alert(e)}
+        bannerSize="banner"
+        adUnitID={adUnitID} // Test ID, Replace with your-admob-unit-id
+        onDidFailToReceiveAdWithError={(e) => console.log(e)}
       />
       <ModalDrink isChose={setShowModal} showModal={showModal} />
     </AppContainerBackGround>
