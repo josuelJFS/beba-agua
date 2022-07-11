@@ -33,7 +33,9 @@ const Peso: React.FC = () => {
       </ContainerHeader>
       <ContainerBody>
         <ImgPickList
-          value1={(e) => setUserInfo((prevState: any) => ({ ...prevState, horaDormi: e }))}
+          value1={(e) =>
+            setUserInfo((prevState: any) => ({ ...prevState, horaDormi: e, agenda: false, notificarion: true }))
+          }
           value2={(e) => setUserInfo((prevState: any) => ({ ...prevState, minDormi: e }))}
           index={22}
           index2={30}

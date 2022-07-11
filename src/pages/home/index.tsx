@@ -25,6 +25,7 @@ import {
   getAllScheduledNotificationsAsync,
 } from "expo-notifications";
 import AntDesign from "react-native-vector-icons/AntDesign";
+import { createCalendar, deleteAllAgenda } from "../../service/calendar";
 
 // eslint-disable-next-line prefer-const
 let hora_acorda = 0;
@@ -42,7 +43,7 @@ TaskManager.defineTask(BACKGROUND_FETCH_TASK, async () => {
 });
 
 const Home: React.FC = () => {
-  const { userInfo, setUserInfo } = useAutenticacaoContext();
+  const { userInfo, setUserInfo, setLoad } = useAutenticacaoContext();
   const [showModal, setShowModal] = useState(false);
   const [porcent, setPorcent] = useState<number>(0);
   const notificationListener = useRef(null);
@@ -57,7 +58,7 @@ const Home: React.FC = () => {
   async function setUserInfosLoad() {
     await AsyncStorage.setItem("user", JSON.stringify(userInfo));
     userInfo.quantoTomeiDia > 0 && setPorcent((userInfo.quantoTomeiDia / userInfo.aguaDiariaIdeal) * 100);
-    //await AsyncStorage.removeItem("user");
+    // await AsyncStorage.removeItem("user");
     const now = new Date();
     const yesterday = new Date(userInfo?.data);
 
@@ -71,17 +72,37 @@ const Home: React.FC = () => {
         quantoTomeiDia: 0,
       }));
       setPorcent(0);
+      createCalendar(userInfo?.horaAcorda, userInfo?.horaDormi);
     }
     if (!userInfo?.data) {
       setUserInfo((props) => ({ ...props, data: new Date(now.getFullYear(), now.getMonth(), now.getDate()) }));
+      createCalendar(userInfo?.horaAcorda, userInfo?.horaDormi);
     }
+
     return;
   }
+
+  async function agenda() {
+    if (!userInfo.agenda) {
+      deleteAllAgenda();
+    }
+  }
+
+  useEffect(() => {
+    agenda();
+  }, [userInfo.agenda]);
+
+  useEffect(() => {
+    if (userInfo?.notificarion) {
+      schedulePushNotification(userInfo?.horaAcorda, userInfo?.horaDormi);
+    } else {
+      cancelAllScheduledNotificationsAsync();
+    }
+  }, [userInfo.notificarion]);
 
   useEffect(() => {
     registerForPushNotificationsAsync();
     //registerBackgroundFetchAsync();
-    schedulePushNotification(userInfo?.horaAcorda, userInfo?.horaDormi);
 
     notificationListener.current = Notifications.addNotificationReceivedListener((notification) => {});
 
@@ -97,8 +118,6 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     setUserInfosLoad();
-    hora_dorme = userInfo.horaDormi;
-    hora_acorda = userInfo.horaAcorda;
   }, [userInfo]);
 
   useEffect(() => {

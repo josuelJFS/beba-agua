@@ -24,8 +24,7 @@ export async function schedulePushNotification(acorda: number, dormi: number) {
   if (!acorda || !dormi) return;
   let arrayNotifications = [];
   const pushExist = await getAllScheduledNotificationsAsync();
-  //await cancelAllScheduledNotificationsAsync()
-  if (pushExist.length == 0) {
+  if (pushExist.length === 0) {
     for (let index = acorda; index < dormi; index++) arrayNotifications.push(index);
     arrayNotifications.forEach(async (value) => {
       await execultTimeIntervalNotification(value);

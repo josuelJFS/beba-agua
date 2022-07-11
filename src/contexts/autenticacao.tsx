@@ -7,10 +7,6 @@ export interface Icontext {
   logado: boolean;
   load: boolean;
   setLoad: (e: boolean) => void;
-  notificacao: boolean;
-  setNotificacao: (e: React.SetStateAction<boolean>) => void;
-  agenda: boolean;
-  setAgenda: (e: React.SetStateAction<boolean>) => void;
 }
 
 export type userInfoProps = {
@@ -24,6 +20,8 @@ export type userInfoProps = {
   quantoTomeiDia?: number;
   mlCopo?: number;
   data?: Date;
+  notificarion?: boolean;
+  agenda?: boolean;
 };
 
 const AutenticacaoContext = createContext<Icontext>({} as Icontext);
@@ -32,8 +30,6 @@ const AutenticacaoProvider: React.FC = ({ children }) => {
   const [userInfo, setUserInfo] = useState<userInfoProps>({} as userInfoProps);
   const [logado, setLogado] = useState<boolean>(false);
   const [load, setLoad] = useState<boolean>(false);
-  const [notificacao, setNotificacao] = useState<boolean>(false);
-  const [agenda, setAgenda] = useState<boolean>(false);
 
   useEffect(() => {
     loadApp();
@@ -52,9 +48,7 @@ const AutenticacaoProvider: React.FC = ({ children }) => {
   }
 
   return (
-    <AutenticacaoContext.Provider
-      value={{ setUserInfo, userInfo, logado, load, setLoad, agenda, notificacao, setAgenda, setNotificacao }}
-    >
+    <AutenticacaoContext.Provider value={{ setUserInfo, userInfo, logado, load, setLoad }}>
       {children}
     </AutenticacaoContext.Provider>
   );

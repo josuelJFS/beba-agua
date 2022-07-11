@@ -5,7 +5,7 @@
   "expo": {
     "name": "copodagua",
     "slug": "copodagua",
-    "version": "1.1.10",
+    "version": "1.1.11",
     "assetBundlePatterns": ["**/*"],
     "scheme": "copodagua",
     "notification": {
@@ -27,7 +27,7 @@
     },
     "android": {
       "package": "com.josuel123.copodagua",
-      "versionCode": 16,
+      "versionCode": 17,
       "permissions": ["SCHEDULE_EXACT_ALARM", "RECEIVE_BOOT_COMPLETED", "READ_CALENDAR", "WRITE_CALENDAR"],
       "config": {
         "googleMobileAdsAppId": "ca-app-pub-7795545248519145~7299937100"
