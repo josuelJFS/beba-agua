@@ -17,12 +17,14 @@ import CopsHeader from "../../components/copsHeader";
 import { Easing, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
 import { AnimatedCircularProgress, AnimatedCircularProgressProps } from "react-native-circular-progress";
 import * as Notifications from "expo-notifications";
+import { useNavigation } from "@react-navigation/native";
 import {
   AndroidNotificationPriority,
   AndroidNotificationVisibility,
   cancelAllScheduledNotificationsAsync,
   getAllScheduledNotificationsAsync,
 } from "expo-notifications";
+import AntDesign from "react-native-vector-icons/AntDesign";
 
 // eslint-disable-next-line prefer-const
 let hora_acorda = 0;
@@ -45,6 +47,7 @@ const Home: React.FC = () => {
   const [porcent, setPorcent] = useState<number>(0);
   const notificationListener = useRef(null);
   const responseListener = useRef(null);
+  const navigation = useNavigation();
 
   const testIDbanner = "ca-app-pub-3940256099942544/6300978111";
   const productionIDbanner = "ca-app-pub-7795545248519145/7128125251";
@@ -149,6 +152,13 @@ const Home: React.FC = () => {
         <ButtonDrink onPress={() => setShowModal(true)}>
           <Img resizeMode="cover" source={copoImg} />
         </ButtonDrink>
+        <AntDesign
+          onPress={() => navigation.navigate("config")}
+          style={{ position: "absolute", right: 20 }}
+          name="setting"
+          size={40}
+          color="#fff"
+        />
       </Footer>
       <AdMobBanner
         style={{ alignItems: "center", justifyContent: "center" }}

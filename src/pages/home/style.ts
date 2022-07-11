@@ -18,6 +18,7 @@ export const Footer = styled.View`
   flex: 1;
   justify-content: center;
   align-items: center;
+  flex-direction: row;
 `;
 export const Img = styled.Image`
   width: 70px;
